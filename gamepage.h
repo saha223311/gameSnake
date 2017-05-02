@@ -34,8 +34,10 @@ public:
 
 signals:
     void backButton();
+    void saveGame(SaveParameters);
 public slots:
     void updateScore();
+    void startSaveGame();
 private slots:
     void pauseButton();
 private:
@@ -46,6 +48,7 @@ private:
 
     QPushButton* m_back;
     QPushButton* m_pause;
+    QPushButton* m_save;
 
     QLabel* m_score;
     QLabel* m_record;

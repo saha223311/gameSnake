@@ -181,6 +181,14 @@ void Game::continueGame(){
     m_timer->start(170);
 }
 
+void Game::setSaveParameters(SaveParameters saveParameters){
+//???
+}
+
+SaveParameters Game::getSaveParameters(){
+    return SaveParameters(m_snake->getCoordinates(), m_fruit->getCoordinate(), *m_options);
+}
+
 Game::~Game(){
     delete m_snake;
     delete m_fruit;

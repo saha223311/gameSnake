@@ -19,6 +19,9 @@ public:
     void setSnakeDirection(Snake::Direction dir);
     void setSnakeStatus(Snake::Status status);
 
+    void setSaveParameters(SaveParameters saveParameters);
+    SaveParameters getSaveParameters();
+
     int getScore();
 
     Snake::Direction getSnakeDirection() const;
@@ -31,6 +34,7 @@ public:
 
 signals:
     void newScore();
+    void saveGame();
 public slots:
 
 private slots:

@@ -15,6 +15,8 @@ MainPage::MainPage(QWidget *parent)
     connect(m_optionsPage, SIGNAL(backButton()), this, SLOT(closeOptionsPage()));
     connect(m_savePage, SIGNAL(backButton()), this, SLOT(closeSavePage()));
     connect(m_gamePage, SIGNAL(backButton()), this, SLOT(closeGamePage()));
+
+    connect(m_gamePage, SIGNAL(saveGame(SaveParameters)), m_savePage, SLOT(saveGame(SaveParameters)));
 }
 
 void MainPage::createWindow(){

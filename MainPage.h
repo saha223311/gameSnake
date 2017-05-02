@@ -4,6 +4,7 @@
 #include "optionspage.h"
 #include "savepage.h"
 #include "gamepage.h"
+#include "structures.h"
 
 #include <QApplication>
 #include <QDesktopWidget>

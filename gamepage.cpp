@@ -16,6 +16,7 @@ void GamePage::createWindow(){
 
     m_back = new QPushButton("STOP THI GAME!!!");
     m_pause = new QPushButton("STOP");
+    m_save = new QPushButton("SAVE");
 
     m_score = new QLabel;
     m_record = new QLabel("Best Score: 0");
@@ -26,6 +27,7 @@ void GamePage::createWindow(){
     m_highButtonLayout->addStretch(1);
     m_highButtonLayout->addWidget(m_back);
     m_highButtonLayout->addWidget(m_pause);
+    m_highButtonLayout->addWidget(m_save);
     m_highButtonLayout->addStretch(1);
 
     m_lowButtonLayout->addWidget(m_score);
@@ -42,6 +44,12 @@ void GamePage::createWindow(){
     m_verticalLayout->addLayout(m_lowButtonLayout);
 
     this->setLayout(m_verticalLayout);
+
+    connect(m_save, SIGNAL(clicked()), this, SLOT(startSaveGame()));
+}
+
+void GamePage::startSaveGame(){
+   emit saveGame(m_game->getSaveParameters());
 }
 
 void GamePage::updateScore(){

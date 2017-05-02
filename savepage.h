@@ -13,6 +13,10 @@
 #include <QVBoxLayout>
 #include <QHBoxLayout>
 
+#include "structures.h"
+#include "savelist.h"
+#include <QListWidget>
+
 class SavePage : public QWidget
 {
     Q_OBJECT
@@ -23,9 +27,13 @@ public:
 signals:
     void backButton();
 public slots:
-
+    void saveGame(SaveParameters saveParameters);
 private:
-    QHBoxLayout* m_horizontalLayout;
+    SaveList m_saveList;
+    QListWidget* m_listWidget;
+
+    QHBoxLayout* m_listWidgetlLayout;
+    QHBoxLayout* m_buttonLayout;
     QVBoxLayout* m_verticalLayout;
 
     QLabel* m_pageTitle;
