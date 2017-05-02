@@ -18,6 +18,7 @@ void GamePage::createWindow(){
     m_pause = new QPushButton("STOP");
 
     m_score = new QLabel;
+    m_record = new QLabel("Best Score: 0");
 
     m_view = new QGraphicsView;
     m_view->setBackgroundBrush(QBrush(QColor(235, 235, 176)));
@@ -28,6 +29,8 @@ void GamePage::createWindow(){
     m_highButtonLayout->addStretch(1);
 
     m_lowButtonLayout->addWidget(m_score);
+    m_lowButtonLayout->addStretch(1);
+    m_lowButtonLayout->addWidget(m_record);
     m_lowButtonLayout->addStretch(1);
 
     m_viewLayout->addStretch(1);
@@ -69,7 +72,7 @@ void GamePage::showEvent(QShowEvent*){
 
     m_score->setText("Score: " + QString::number(m_game->getScore()));
 
-    this->setFixedSize(m_view->width() + 20, m_view->height() + m_back->height() + 30);
+    this->setFixedSize(m_view->width() + 20, m_view->height() + m_back->height() + m_score->height() + 30);
     this->move((QApplication::desktop()->width() - width()) / 2,
           (QApplication::desktop()->height() - height()) / 2);
 
@@ -102,6 +105,7 @@ GamePage::~GamePage(){
     delete m_pause;
 
     delete m_score;
+    delete m_record;
 }
 
 void GamePage::pauseButton(){

@@ -48,6 +48,7 @@ private:
     QPushButton* m_pause;
 
     QLabel* m_score;
+    QLabel* m_record;
 
     QGraphicsScene* m_scene;
     QGraphicsView* m_view;
