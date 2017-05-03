@@ -27,4 +27,8 @@ Coordinate Fruit::getCoordinate() const{
     return m_fruitCoordinate;
 }
 
+void Fruit::setCoordinate(Coordinate coordinate){
+    m_fruitCoordinate = coordinate;
+}
+
 

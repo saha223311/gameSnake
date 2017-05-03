@@ -1,6 +1,8 @@
 #ifndef STRUCTURES_H
 #define STRUCTURES_H
 
+#include <QString>
+
 struct Options{
     Options(){}
     Options(int height, int width, int rectSize, bool warpWallMode)
@@ -33,6 +35,7 @@ struct SaveParameters{
     std::list<Coordinate> snakeCoordinates;
     Coordinate fruitCoordinates;
     Options options;
+    QString saveName;
 };
 
 #endif // STRUCTURES_H

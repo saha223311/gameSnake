@@ -99,6 +99,10 @@ const std::list<Coordinate>& Snake::getCoordinates() const{
     return m_body;
 }
 
+void Snake::setCoordinates(std::list<Coordinate> coordinates){
+    m_body = coordinates;
+}
+
 void Snake::Increase(){
     Coordinate temp = m_body.front();
 

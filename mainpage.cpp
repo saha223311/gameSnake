@@ -23,6 +23,7 @@ void MainPage::createWindow(){
     m_optionsPage = new OptionsPage;
     m_savePage = new SavePage;
     m_gamePage = new GamePage;
+    m_savePage->setGamePage(m_gamePage);
 
     m_verticalLayout = new QVBoxLayout;
     m_horizontalLayout = new QHBoxLayout;

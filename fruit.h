@@ -15,6 +15,7 @@ public:
     void spawn(const std::list<Coordinate> &body);
 
     Coordinate getCoordinate() const;
+    void setCoordinate(Coordinate coordinate);
 
 private:
     Coordinate m_fruitCoordinate;

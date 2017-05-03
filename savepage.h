@@ -16,18 +16,23 @@
 #include "structures.h"
 #include "savelist.h"
 #include <QListWidget>
+#include "gamepage.h"
 
 class SavePage : public QWidget
 {
     Q_OBJECT
 public:
     explicit SavePage(QWidget *parent = 0);
+    void setGamePage(GamePage* gamePage);
     ~SavePage();
 
 signals:
     void backButton();
+
 public slots:
     void saveGame(SaveParameters saveParameters);
+    void loadGame();
+    void deleteGame();
 private:
     SaveList m_saveList;
     QListWidget* m_listWidget;
@@ -39,9 +44,13 @@ private:
     QLabel* m_pageTitle;
 
     QPushButton* m_back;
+    QPushButton* m_load;
+    QPushButton* m_delete;
 
     void showEvent(QShowEvent*);
     void createWindow();
+
+    GamePage* m_gamePage;
 };
 
 #endif // SCOREPAGE_H

@@ -1,5 +1,7 @@
 #include "savepage.h"
 
+#include <QDebug>
+
 SavePage::SavePage(QWidget *parent)
     : QWidget(parent)
 {
@@ -19,6 +21,8 @@ void SavePage::createWindow(){
    // m_gameName->setPixmap(SNAKE_GAME);
 
     m_back = new QPushButton("Back");
+    m_load = new QPushButton("Load");
+    m_delete = new QPushButton("Delete");
 
    // m_saveList.addSave(0, SaveParameters());
 
@@ -31,6 +35,8 @@ void SavePage::createWindow(){
     m_buttonLayout->addStretch(1);
     m_buttonLayout->addWidget(m_pageTitle);
     m_buttonLayout->addWidget(m_back);
+    m_buttonLayout->addWidget(m_load);
+    m_buttonLayout->addWidget(m_delete);
     m_buttonLayout->addStretch(1);
 
     m_verticalLayout->addLayout(m_listWidgetlLayout);
@@ -38,7 +44,26 @@ void SavePage::createWindow(){
 
     this->setLayout(m_verticalLayout);
 
-    //connect(m_listWidget, SIGNAL(clicked(QModelIndex)),
+    connect(m_load, SIGNAL(clicked()), this, SLOT(loadGame()));
+    connect(m_delete, SIGNAL(clicked()), this, SLOT(deleteGame()));
+}
+
+void SavePage::loadGame(){
+    m_gamePage->setOptionsController(m_saveList.getSave(m_listWidget->currentItem()->text()));
+    m_gamePage->show();
+    this->close();
+}
+
+void SavePage::deleteGame(){
+    m_saveList.deleteSave(m_listWidget->currentItem()->text());
+    m_listWidget->clear();
+    for (int i = 0; i < m_saveList.getSaveNumber(); i++){
+        m_listWidget->addItem(m_saveList.getSaveName(i));
+    }
+}
+
+void SavePage::setGamePage(GamePage *gamePage){
+    m_gamePage = gamePage;
 }
 
 void SavePage::showEvent(QShowEvent *){
@@ -48,12 +73,12 @@ void SavePage::showEvent(QShowEvent *){
 
     m_listWidget->clear();
     for (int i = 0; i < m_saveList.getSaveNumber(); i++){
-        m_listWidget->addItem(QString::number(i));
+         m_listWidget->addItem(m_saveList.getSaveName(i));
     }
 }
 
 void SavePage::saveGame(SaveParameters saveParameters){
-    m_saveList.addSave(m_saveList.getSaveNumber() + 1, saveParameters);
+    m_saveList.addSave(saveParameters.saveName, saveParameters);
 }
 
 SavePage::~SavePage(){
@@ -63,5 +88,7 @@ SavePage::~SavePage(){
 
     delete m_pageTitle;
     delete m_back;
+    delete m_load;
+    delete m_delete;
     delete m_listWidget;
 }

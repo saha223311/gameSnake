@@ -22,6 +22,7 @@ public:
     Coordinate getHead() const;
     Coordinate getBack() const;
     const std::list<Coordinate>& getCoordinates() const;
+    void setCoordinates(std::list<Coordinate> coordinates);
 
     void setDirection(Snake::Direction direction);
     void setStatus(Snake::Status status);

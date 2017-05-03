@@ -13,6 +13,7 @@
 
 #include <QPushButton>
 #include <QLabel>
+#include <QLineEdit>
 
 #include <QApplication>
 #include <QDesktopWidget>
@@ -29,6 +30,7 @@ public:
     explicit GamePage(QWidget *parent = 0);
 
     void setOptionsController(OptionsPage* optionsPage);
+    void setOptionsController(SaveParameters saveParameters);
 
     ~GamePage();
 
@@ -52,6 +54,8 @@ private:
 
     QLabel* m_score;
     QLabel* m_record;
+
+    QLineEdit* m_saveName;
 
     QGraphicsScene* m_scene;
     QGraphicsView* m_view;

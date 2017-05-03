@@ -16,6 +16,9 @@ class Game : public QObject
 public:
     explicit Game(QGraphicsScene* scene, Options* options, QObject *parent = 0);
 
+    void newGame();
+    void loadGame();
+
     void setSnakeDirection(Snake::Direction dir);
     void setSnakeStatus(Snake::Status status);
 
