@@ -1,10 +1,7 @@
 #include "MainPage.h"
 
-#include <QPixmap>
-
 MainPage::MainPage(QWidget *parent)
-    : QWidget(parent)
-{
+    : QWidget(parent){
     this->createWindow();
 
     connect(m_play, SIGNAL(clicked()), this, SLOT(setGamePage()));
@@ -69,7 +66,7 @@ void MainPage::closeGamePage(){
 }
 
 void MainPage::setGamePage(){
-    m_gamePage->setOptionsController(m_optionsPage);
+    m_gamePage->startNewGame(m_optionsPage);
     m_gamePage->show();
     this->close();
 }

@@ -2,11 +2,13 @@
 #define SAVELIST_H
 
 #include <QObject>
+
 #include <QSettings>
 #include <QString>
+#include <QList>
+
 #include "structures.h"
 
-#include <QList>
 
 class SaveList : public QObject
 {
@@ -21,7 +23,6 @@ public:
     QString getSaveName(int index);
 
     int getSaveNumber();
-
 
 signals:
 

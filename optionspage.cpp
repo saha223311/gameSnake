@@ -1,8 +1,7 @@
 #include "optionspage.h"
 
 OptionsPage::OptionsPage(QWidget *parent)
-    : QWidget(parent)
-{
+    : QWidget(parent){
     this->createWindow();
     connect(m_back, SIGNAL(clicked()), this, SIGNAL(backButton()));
 }

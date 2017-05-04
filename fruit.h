@@ -3,23 +3,23 @@
 
 #include <QObject>
 
+#include <time.h>
+#include <QList>
+
 #include "structures.h"
 
-#include <time.h>
-
-class Fruit : public QObject
-{
+class Fruit : public QObject{
     Q_OBJECT
 public:
     explicit Fruit(Options* options, QObject *parent = 0);
-    void spawn(const std::list<Coordinate> &body);
 
-    Coordinate getCoordinate() const;
+    void spawn(const QList<Coordinate> &body);
+
     void setCoordinate(Coordinate coordinate);
+    Coordinate getCoordinate() const;
 
 private:
     Coordinate m_fruitCoordinate;
-
     Options* m_options;
 };
 

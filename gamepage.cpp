@@ -1,8 +1,7 @@
 #include "gamepage.h"
 
 GamePage::GamePage(QWidget *parent)
-    : QWidget(parent)
-{
+    : QWidget(parent){
     this->createWindow();
     connect(m_back, SIGNAL(clicked()), this, SIGNAL(backButton()));
     connect(m_pause, SIGNAL(clicked()), this, SLOT(pauseButton()));
@@ -48,10 +47,10 @@ void GamePage::createWindow(){
 
     this->setLayout(m_verticalLayout);
 
-    connect(m_save, SIGNAL(clicked()), this, SLOT(startSaveGame()));
+    connect(m_save, SIGNAL(clicked()), this, SLOT(saveProcess()));
 }
 
-void GamePage::startSaveGame(){
+void GamePage::saveProcess(){
    SaveParameters parameters(m_game->getSaveParameters());
    parameters.saveName = m_saveName->text();
    emit saveGame(parameters);
@@ -62,6 +61,9 @@ void GamePage::updateScore(){
 }
 
 void GamePage::initilizeGame(){
+    m_scene = new QGraphicsScene;
+    m_view->setScene(m_scene);
+
     m_scene->setSceneRect(0, 0, m_options->width * m_options->rectSize,
                           m_options->height * m_options->rectSize);
 
@@ -77,12 +79,6 @@ void GamePage::initilizeGame(){
 }
 
 void GamePage::showEvent(QShowEvent*){
-    //m_scene = new QGraphicsScene;
-    //m_view->setScene(m_scene);
-
-    //this->initilizeGame();
-    //m_game = new Game(m_scene, m_options);
-
     m_score->setText("Score: " + QString::number(m_game->getScore()));
 
     this->setFixedSize(m_view->width() + 20, m_view->height() + m_back->height() + m_score->height() + 30);
@@ -97,29 +93,24 @@ void GamePage::closeEvent(QCloseEvent*){
     delete m_game;
 }
 
-void GamePage::setOptionsController(OptionsPage *optionsPage){
-   // m_game = new Game(m_scene, m_options);
+void GamePage::startNewGame(OptionsPage *optionsPage){
     m_options = new Options(optionsPage->getHeight(), optionsPage->getWidth(),
                             optionsPage->getRectSize(), optionsPage->getWarpWallMode());
-    m_scene = new QGraphicsScene;
-    m_view->setScene(m_scene);
 
     this->initilizeGame();
     m_game = new Game(m_scene, m_options);
-    m_game->newGame();
+    m_game->setDefaultSaveParameters();
+    m_game->startGame();
 }
 
-void GamePage::setOptionsController(SaveParameters saveParameters){
-   // m_game = new Game(m_scene, m_options);
+void GamePage::startSavedGame(SaveParameters saveParameters){
     m_options = new Options(saveParameters.options.height, saveParameters.options.width,
                             saveParameters.options.rectSize, saveParameters.options.warpWallMode);
-    m_scene = new QGraphicsScene;
-    m_view->setScene(m_scene);
 
     this->initilizeGame();
     m_game = new Game(m_scene, m_options);
-    m_game->setSaveParameters(saveParameters); // ПЕРЕДЕЛАТЬ В 1 ВЫЗОВ
-    m_game->loadGame();
+    m_game->setSaveParameters(saveParameters);
+    m_game->startGame();
 }
 
 GamePage::~GamePage(){

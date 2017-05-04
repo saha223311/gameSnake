@@ -1,11 +1,7 @@
 #include "game.h"
 
-#include <QPixmap>
-#include <QGraphicsItem>
-
 Game::Game(QGraphicsScene *scene, Options *options, QObject *parent)
-    : QObject(parent), m_scene(scene), m_options(options)
-{
+    : QObject(parent), m_scene(scene), m_options(options){
     m_snake = new Snake(m_options);
     m_fruit = new Fruit(m_options);
     m_timer = new QTimer;
@@ -13,47 +9,29 @@ Game::Game(QGraphicsScene *scene, Options *options, QObject *parent)
     connect(m_timer, SIGNAL(timeout()), this, SLOT(drawSnake()));
 }
 
-void Game::newGame(){
+void Game::startGame(){
     score = 0;
 
-    m_scene->addRect(m_snake->getHead().X * m_options->rectSize,
-                     m_snake->getHead().Y * m_options->rectSize,
-                     m_options->rectSize, m_options->rectSize,
-                     QPen(QColor(0, 0, 0, 30)), QBrush(QColor(30,30,30)));
-
-    m_timer->start(170);
-
-    m_fruit->spawn(m_snake->getCoordinates());
+    for (auto it : m_snake->getCoordinates()){
+        if (it == m_snake->getHead()){
+            m_scene->addRect(it.X * m_options->rectSize,
+                             it.Y * m_options->rectSize,
+                             m_options->rectSize, m_options->rectSize,
+                             QPen(QColor(0, 0, 0, 30)), QBrush(QColor(30,30,30)));
+        }
+        else{
+        m_scene->addRect(it.X * m_options->rectSize,
+                         it.Y * m_options->rectSize,
+                         m_options->rectSize, m_options->rectSize,
+                         QPen(QColor(0, 0, 0, 30)), QBrush(QColor(168,168,168)));
+        }
+    }
     m_scene->addRect(m_fruit->getCoordinate().X * m_options->rectSize,
                      m_fruit->getCoordinate().Y * m_options->rectSize,
                      m_options->rectSize, m_options->rectSize,
                      QPen(QColor(0, 0, 0, 30)), QBrush(QColor(255,99,99)));
 
-    //connect(m_timer, SIGNAL(timeout()), this, SLOT(drawSnake()));
-}
-
-void Game::loadGame(){
-    score = 0;
-    for (auto it : m_snake->getCoordinates()){
-        if (it == m_snake->getHead())
-            m_scene->addRect(it.X * m_options->rectSize,
-                             it.Y * m_options->rectSize,
-                             m_options->rectSize, m_options->rectSize,
-                             QPen(QColor(0, 0, 0, 30)), QBrush(QColor(30,30,30)));
-        else
-        m_scene->addRect(it.X * m_options->rectSize,
-                         it.Y * m_options->rectSize,
-                         m_options->rectSize, m_options->rectSize,
-                         QPen(QColor(0, 0, 0, 30)), QBrush(QColor(168,168,168)));
-    }
-
-
-        m_timer->start(170);
-
-        m_scene->addRect(m_fruit->getCoordinate().X * m_options->rectSize,
-                         m_fruit->getCoordinate().Y * m_options->rectSize,
-                         m_options->rectSize, m_options->rectSize,
-                         QPen(QColor(0, 0, 0, 30)), QBrush(QColor(255,99,99)));
+    m_timer->start(170);
 }
 
 int Game::getScore(){
@@ -95,15 +73,15 @@ void Game::drawSnake(){
 
 void Game::drawMoveSnake(){
     // HEAD<>
-       m_scene->removeItem(m_scene->items(QRectF(m_snake->getHead().X * m_options->rectSize + 1,
-                                                 m_snake->getHead().Y * m_options->rectSize + 1,
-                                                 m_options->rectSize - 2 , m_options->rectSize - 2))[0]);
+    m_scene->removeItem(m_scene->items(QRectF(m_snake->getHead().X * m_options->rectSize + 1,
+                                              m_snake->getHead().Y * m_options->rectSize + 1,
+                                              m_options->rectSize - 2 , m_options->rectSize - 2))[0]);
 
-       m_scene->addRect(m_snake->getHead().X * m_options->rectSize,
-                        m_snake->getHead().Y * m_options->rectSize,
-                        m_options->rectSize, m_options->rectSize,
-                        QPen(QColor(0, 0, 0, 30)), QBrush(QColor(168,168,168)));
-       // HEAD</>
+    m_scene->addRect(m_snake->getHead().X * m_options->rectSize,
+                     m_snake->getHead().Y * m_options->rectSize,
+                     m_options->rectSize, m_options->rectSize,
+                     QPen(QColor(0, 0, 0, 30)), QBrush(QColor(168,168,168)));
+    // HEAD</>
 
     m_scene->removeItem(m_scene->items(QRectF(m_snake->getBack().X * m_options->rectSize + 1,
                                               m_snake->getBack().Y * m_options->rectSize + 1,
@@ -117,15 +95,15 @@ void Game::drawMoveSnake(){
 
 void Game::drawIncreaseSnake(){
     // HEAD<>
-        m_scene->removeItem(m_scene->items(QRectF(m_snake->getHead().X * m_options->rectSize + 1,
-                                                  m_snake->getHead().Y * m_options->rectSize + 1,
-                                                  m_options->rectSize - 2 , m_options->rectSize - 2))[0]);
+    m_scene->removeItem(m_scene->items(QRectF(m_snake->getHead().X * m_options->rectSize + 1,
+                                              m_snake->getHead().Y * m_options->rectSize + 1,
+                                              m_options->rectSize - 2 , m_options->rectSize - 2))[0]);
 
-        m_scene->addRect(m_snake->getHead().X * m_options->rectSize,
-                         m_snake->getHead().Y * m_options->rectSize,
-                         m_options->rectSize, m_options->rectSize,
-                         QPen(QColor(0, 0, 0, 30)), QBrush(QColor(168,168,168)));
-        // HEAD</>
+    m_scene->addRect(m_snake->getHead().X * m_options->rectSize,
+                     m_snake->getHead().Y * m_options->rectSize,
+                     m_options->rectSize, m_options->rectSize,
+                     QPen(QColor(0, 0, 0, 30)), QBrush(QColor(168,168,168)));
+    // HEAD</>
     m_snake->Increase();
     m_scene->addRect(m_snake->getHead().X * m_options->rectSize,
                      m_snake->getHead().Y * m_options->rectSize,
@@ -212,6 +190,10 @@ void Game::continueGame(){
 void Game::setSaveParameters(SaveParameters saveParameters){
     m_snake->setCoordinates(saveParameters.snakeCoordinates);
     m_fruit->setCoordinate(saveParameters.fruitCoordinates);
+}
+
+void Game::setDefaultSaveParameters(){
+    m_fruit->spawn(m_snake->getCoordinates());
 }
 
 SaveParameters Game::getSaveParameters(){

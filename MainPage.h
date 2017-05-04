@@ -1,23 +1,22 @@
 #ifndef MAINPAGE_H
 #define MAINPAGE_H
 
-#include "optionspage.h"
-#include "savepage.h"
-#include "gamepage.h"
-#include "structures.h"
+#include <QWidget>
 
 #include <QApplication>
 #include <QDesktopWidget>
 #include <QShowEvent>
-
-#include <QWidget>
-//#include <QPixmap>
 
 #include <QPushButton>
 #include <QLabel>
 
 #include <QVBoxLayout>
 #include <QHBoxLayout>
+
+#include "optionspage.h"
+#include "savepage.h"
+#include "gamepage.h"
+#include "structures.h"
 
 class MainPage : public QWidget
 {
@@ -30,12 +29,13 @@ signals:
 public slots:
 
 private slots:
-    void closeOptionsPage();
-    void closeSavePage();
-    void closeGamePage();
     void setOptionsPage();
     void setSavePage();
     void setGamePage();
+
+    void closeOptionsPage();
+    void closeSavePage();
+    void closeGamePage();
 private:
     QLabel* m_pageTitle;
 

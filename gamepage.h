@@ -1,25 +1,26 @@
 #ifndef GAMEPAGE_H
 #define GAMEPAGE_H
 
-#include "game.h"
-#include "optionspage.h"
-
 #include <QWidget>
-#include <QKeyEvent>
-
-#include <QVBoxLayout>
-#include <QGraphicsScene>
-#include <QGraphicsView>
-
-#include <QPushButton>
-#include <QLabel>
-#include <QLineEdit>
 
 #include <QApplication>
 #include <QDesktopWidget>
 #include <QShowEvent>
 #include <QCloseEvent>
+#include <QKeyEvent>
 
+#include <QGraphicsScene>
+#include <QGraphicsView>
+
+#include <QVBoxLayout>
+#include <QHBoxLayout>
+
+#include <QPushButton>
+#include <QLabel>
+#include <QLineEdit>
+
+#include "game.h"
+#include "optionspage.h"
 #include "structures.h"
 
 
@@ -29,8 +30,8 @@ class GamePage : public QWidget
 public:
     explicit GamePage(QWidget *parent = 0);
 
-    void setOptionsController(OptionsPage* optionsPage);
-    void setOptionsController(SaveParameters saveParameters);
+    void startNewGame(OptionsPage* optionsPage);
+    void startSavedGame(SaveParameters saveParameters);
 
     ~GamePage();
 
@@ -39,7 +40,7 @@ signals:
     void saveGame(SaveParameters);
 public slots:
     void updateScore();
-    void startSaveGame();
+    void saveProcess();
 private slots:
     void pauseButton();
 private:

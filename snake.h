@@ -3,6 +3,8 @@
 
 #include <QObject>
 
+#include <QList>
+
 #include "structures.h"
 
 class Snake : public QObject
@@ -21,23 +23,19 @@ public:
 
     Coordinate getHead() const;
     Coordinate getBack() const;
-    const std::list<Coordinate>& getCoordinates() const;
-    void setCoordinates(std::list<Coordinate> coordinates);
 
+    void setCoordinates(QList<Coordinate> coordinates);
     void setDirection(Snake::Direction direction);
     void setStatus(Snake::Status status);
 
+    const QList<Coordinate>& getCoordinates() const;
     Snake::Direction getDirection() const;
     Snake::Status getStatus() const;
-
-signals:
-
-public slots:
 
 private:
     Status m_status = LIVE;
     Direction m_direction = RIGHT;
-    std::list<Coordinate> m_body;
+    QList<Coordinate> m_body;
 
     Options* m_options;
 };

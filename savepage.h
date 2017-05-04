@@ -9,13 +9,13 @@
 
 #include <QLabel>
 #include <QPushButton>
+#include <QListWidget>
 
 #include <QVBoxLayout>
 #include <QHBoxLayout>
 
 #include "structures.h"
 #include "savelist.h"
-#include <QListWidget>
 #include "gamepage.h"
 
 class SavePage : public QWidget
@@ -23,7 +23,9 @@ class SavePage : public QWidget
     Q_OBJECT
 public:
     explicit SavePage(QWidget *parent = 0);
+
     void setGamePage(GamePage* gamePage);
+
     ~SavePage();
 
 signals:
@@ -31,6 +33,7 @@ signals:
 
 public slots:
     void saveGame(SaveParameters saveParameters);
+
     void loadGame();
     void deleteGame();
 private:

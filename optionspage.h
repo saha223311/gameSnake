@@ -7,8 +7,6 @@
 #include <QDesktopWidget>
 #include <QShowEvent>
 
-//#include <QPixmap>
-
 #include <QVBoxLayout>
 #include <QHBoxLayout>
 

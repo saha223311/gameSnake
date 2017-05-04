@@ -1,15 +1,11 @@
 #include "fruit.h"
 
-#include <QImage>
-#include <QPixmap>
-#include <QGraphicsPixmapItem>
-
 Fruit::Fruit(Options *options, QObject *parent)
     : QObject(parent), m_options(options){
     srand(time(NULL));
 }
 
-void Fruit::spawn(const std::list<Coordinate>& body){
+void Fruit::spawn(const QList<Coordinate> &body){
     bool flag;
     do{
         flag = true;
@@ -21,14 +17,13 @@ void Fruit::spawn(const std::list<Coordinate>& body){
     } while (!flag);
 }
 
-
+void Fruit::setCoordinate(Coordinate coordinate){
+    m_fruitCoordinate = coordinate;
+}
 
 Coordinate Fruit::getCoordinate() const{
     return m_fruitCoordinate;
 }
 
-void Fruit::setCoordinate(Coordinate coordinate){
-    m_fruitCoordinate = coordinate;
-}
 
 

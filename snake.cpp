@@ -1,8 +1,8 @@
 #include "snake.h"
 
-Snake::Snake(Options *options , QObject *parent)
+Snake::Snake(Options *options, QObject *parent)
     : QObject(parent), m_options(options){
-    m_body.push_front(Coordinate(m_options->width / 2, m_options->height / 2));
+    m_body.push_back(Coordinate(m_options->width / 2, m_options->height / 2));
 }
 
 Coordinate Snake::getHead() const{
@@ -11,6 +11,30 @@ Coordinate Snake::getHead() const{
 
 Coordinate Snake::getBack() const{
     return m_body.back();
+}
+
+void Snake::setDirection(Snake::Direction direction){
+    m_direction = direction;
+}
+
+void Snake::setStatus(Snake::Status status){
+    m_status = status;
+}
+
+void Snake::setCoordinates(QList<Coordinate> coordinates){
+    m_body = coordinates;
+}
+
+Snake::Direction Snake::getDirection() const{
+    return m_direction;
+}
+
+Snake::Status Snake::getStatus() const{
+    return m_status;
+}
+
+const QList<Coordinate> &Snake::getCoordinates() const{
+    return m_body;
 }
 
 Coordinate Snake::nextMove(){
@@ -77,30 +101,6 @@ void Snake::Move(){
         if (temp.Y == m_options->height + 1) temp.Y = 0;
     }
     m_body.push_front(temp);
-}
-
-void Snake::setDirection(Snake::Direction direction){
-    m_direction = direction;
-}
-
-void Snake::setStatus(Snake::Status status){
-    m_status = status;
-}
-
-Snake::Direction Snake::getDirection() const{
-    return m_direction;
-}
-
-Snake::Status Snake::getStatus() const{
-    return m_status;
-}
-
-const std::list<Coordinate>& Snake::getCoordinates() const{
-    return m_body;
-}
-
-void Snake::setCoordinates(std::list<Coordinate> coordinates){
-    m_body = coordinates;
 }
 
 void Snake::Increase(){

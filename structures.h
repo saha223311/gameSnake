@@ -2,6 +2,7 @@
 #define STRUCTURES_H
 
 #include <QString>
+#include <QList>
 
 struct Options{
     Options(){}
@@ -29,10 +30,10 @@ struct Coordinate{
 
 struct SaveParameters{
     SaveParameters(){}
-    SaveParameters(std::list<Coordinate> snakeCoordinates, Coordinate fruitCoordinates, Options options)
+    SaveParameters(QList<Coordinate> snakeCoordinates, Coordinate fruitCoordinates, Options options)
         :snakeCoordinates(snakeCoordinates), fruitCoordinates(fruitCoordinates), options(options){}
 
-    std::list<Coordinate> snakeCoordinates;
+    QList<Coordinate> snakeCoordinates;
     Coordinate fruitCoordinates;
     Options options;
     QString saveName;

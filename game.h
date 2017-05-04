@@ -1,13 +1,13 @@
 #ifndef GAME_H
 #define GAME_H
 
-#include "snake.h"
-#include "fruit.h"
-
 #include <QObject>
+
 #include <QGraphicsScene>
 #include <QTimer>
 
+#include "snake.h"
+#include "fruit.h"
 #include "structures.h"
 
 class Game : public QObject
@@ -16,13 +16,14 @@ class Game : public QObject
 public:
     explicit Game(QGraphicsScene* scene, Options* options, QObject *parent = 0);
 
-    void newGame();
-    void loadGame();
+    void startGame();
 
     void setSnakeDirection(Snake::Direction dir);
     void setSnakeStatus(Snake::Status status);
 
     void setSaveParameters(SaveParameters saveParameters);
+    void setDefaultSaveParameters();
+
     SaveParameters getSaveParameters();
 
     int getScore();
@@ -64,7 +65,6 @@ private:
 
     void m_gameOver();
     void m_happyEnd();
-
 };
 
 #endif // GAME_H

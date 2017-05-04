@@ -1,10 +1,7 @@
 #include "savepage.h"
 
-#include <QDebug>
-
 SavePage::SavePage(QWidget *parent)
-    : QWidget(parent)
-{
+    : QWidget(parent){
     this->createWindow();
     connect(m_back, SIGNAL(clicked()), this, SIGNAL(backButton()));
 }
@@ -17,16 +14,10 @@ void SavePage::createWindow(){
     m_listWidget = new QListWidget;
 
     m_pageTitle = new QLabel("SNAKE GAME");
-   // QPixmap SNAKE_GAME("E:/QtProjects/gameSnake_2/button.png");
-   // m_gameName->setPixmap(SNAKE_GAME);
 
     m_back = new QPushButton("Back");
     m_load = new QPushButton("Load");
     m_delete = new QPushButton("Delete");
-
-   // m_saveList.addSave(0, SaveParameters());
-
-
 
     m_listWidgetlLayout->addStretch(1);
     m_listWidgetlLayout->addWidget(m_listWidget);
@@ -49,7 +40,7 @@ void SavePage::createWindow(){
 }
 
 void SavePage::loadGame(){
-    m_gamePage->setOptionsController(m_saveList.getSave(m_listWidget->currentItem()->text()));
+    m_gamePage->startSavedGame(m_saveList.getSave(m_listWidget->currentItem()->text()));
     m_gamePage->show();
     this->close();
 }
