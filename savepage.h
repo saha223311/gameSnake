@@ -36,10 +36,13 @@ public slots:
 
     void loadGame();
     void deleteGame();
+    void unlockButtons();
+
 private:
     SaveList m_saveList;
     QListWidget* m_listWidget;
 
+    QHBoxLayout* m_pageTitleLayout;
     QHBoxLayout* m_listWidgetlLayout;
     QHBoxLayout* m_buttonLayout;
     QVBoxLayout* m_verticalLayout;

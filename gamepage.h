@@ -17,11 +17,11 @@
 
 #include <QPushButton>
 #include <QLabel>
-#include <QLineEdit>
 
 #include "game.h"
 #include "optionspage.h"
 #include "structures.h"
+#include "savenamepage.h"
 
 
 class GamePage : public QWidget
@@ -40,7 +40,10 @@ signals:
     void saveGame(SaveParameters);
 public slots:
     void updateScore();
-    void saveProcess();
+    void saveProcess(QString);
+    void setSaveNamePage();
+
+    void checkDirection();
 private slots:
     void pauseButton();
 private:
@@ -56,14 +59,16 @@ private:
     QLabel* m_score;
     QLabel* m_record;
 
-    QLineEdit* m_saveName;
-
     QGraphicsScene* m_scene;
     QGraphicsView* m_view;
 
     Game* m_game;
 
     Options* m_options;
+    SaveNamePage m_saveNamePage;
+
+    Snake::Direction m_direction;
+    bool turnDirection = true;
 
     void showEvent(QShowEvent *);
     void closeEvent(QCloseEvent*);

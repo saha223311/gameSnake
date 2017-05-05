@@ -39,6 +39,8 @@ public:
 signals:
     void newScore();
     void saveGame();
+
+    void endMove();
 public slots:
 
 private slots:

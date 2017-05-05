@@ -1,5 +1,9 @@
 #include "game.h"
 
+#include <QGraphicsItem>
+#include <QPixmap>
+#include <QImage>
+
 Game::Game(QGraphicsScene *scene, Options *options, QObject *parent)
     : QObject(parent), m_scene(scene), m_options(options){
     m_snake = new Snake(m_options);
@@ -39,7 +43,7 @@ int Game::getScore(){
 }
 
 void Game::drawSnake(){
-
+    emit this->endMove();
     this->checkDead();
     this->checkIncreased();
     this->checkWin();
@@ -69,6 +73,7 @@ void Game::drawSnake(){
     default:
         break;
     }
+
 }
 
 void Game::drawMoveSnake(){
@@ -147,9 +152,9 @@ void Game::spawnNewFruit(){
                      m_options->rectSize, m_options->rectSize,
                      QPen(QColor(0, 0, 0, 30)), QBrush(QColor(255,99,99)));
 
-   /* QGraphicsItem* scitem = m_scene->addPixmap(
-                QPixmap::fromImage(QImage("E://QtProjects//gameSnake_2_3//fruit.png")));
-    scitem->setScale(0.005 * m_options->rectSize / 10);
+    /*QGraphicsItem* scitem = m_scene->addPixmap(
+                QPixmap::fromImage(QImage("E://QtProjects//gameSnake_2_3//apple_min.png")));
+    scitem->setScale(0.02 * m_options->rectSize );
     scitem->setPos(QPoint(m_fruit->getCoordinate().X * m_options->rectSize,
                           m_fruit->getCoordinate().Y * m_options->rectSize));*/
 

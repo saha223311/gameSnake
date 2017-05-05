@@ -13,11 +13,9 @@ void GamePage::createWindow(){
     m_lowButtonLayout = new QHBoxLayout;
     m_viewLayout = new QHBoxLayout;
 
-    m_back = new QPushButton("STOP THI GAME!!!");
-    m_pause = new QPushButton("STOP");
-    m_save = new QPushButton("SAVE");
-
-    m_saveName = new QLineEdit;
+    m_back = new QPushButton("Back");
+    m_pause = new QPushButton("Stop");
+    m_save = new QPushButton("Save");
 
     m_score = new QLabel;
     m_record = new QLabel("Best Score: 0");
@@ -27,11 +25,11 @@ void GamePage::createWindow(){
 
     m_highButtonLayout->addStretch(1);
     m_highButtonLayout->addWidget(m_back);
-    m_highButtonLayout->addWidget(m_pause);
     m_highButtonLayout->addWidget(m_save);
-     m_highButtonLayout->addWidget(m_saveName);
     m_highButtonLayout->addStretch(1);
 
+    m_lowButtonLayout->addWidget(m_pause);
+    m_lowButtonLayout->addStretch(1);
     m_lowButtonLayout->addWidget(m_score);
     m_lowButtonLayout->addStretch(1);
     m_lowButtonLayout->addWidget(m_record);
@@ -47,12 +45,17 @@ void GamePage::createWindow(){
 
     this->setLayout(m_verticalLayout);
 
-    connect(m_save, SIGNAL(clicked()), this, SLOT(saveProcess()));
+    connect(m_save, SIGNAL(clicked()), this, SLOT(setSaveNamePage()));
+    connect(&m_saveNamePage, SIGNAL(saveProcess(QString)), this, SLOT(saveProcess(QString)));
 }
 
-void GamePage::saveProcess(){
+void GamePage::setSaveNamePage(){
+    m_saveNamePage.show();
+}
+
+void GamePage::saveProcess(QString saveName){
    SaveParameters parameters(m_game->getSaveParameters());
-   parameters.saveName = m_saveName->text();
+   parameters.saveName = saveName;
    emit saveGame(parameters);
 }
 
@@ -63,6 +66,7 @@ void GamePage::updateScore(){
 void GamePage::initilizeGame(){
     m_scene = new QGraphicsScene;
     m_view->setScene(m_scene);
+    m_direction = Snake::RIGHT;
 
     m_scene->setSceneRect(0, 0, m_options->width * m_options->rectSize,
                           m_options->height * m_options->rectSize);
@@ -80,8 +84,11 @@ void GamePage::initilizeGame(){
 
 void GamePage::showEvent(QShowEvent*){
     m_score->setText("Score: " + QString::number(m_game->getScore()));
+    m_save->setEnabled(false);
 
     this->setFixedSize(m_view->width() + 20, m_view->height() + m_back->height() + m_score->height() + 30);
+    //this->setFixedSize(m_options->width * m_options->rectSize + 30,
+    //                   m_options->height * m_options->rectSize + m_back->height() + m_score->height() + 40);
     this->move((QApplication::desktop()->width() - width()) / 2,
           (QApplication::desktop()->height() - height()) / 2);
 
@@ -99,6 +106,7 @@ void GamePage::startNewGame(OptionsPage *optionsPage){
 
     this->initilizeGame();
     m_game = new Game(m_scene, m_options);
+    connect(m_game, SIGNAL(endMove()), this, SLOT(checkDirection()));
     m_game->setDefaultSaveParameters();
     m_game->startGame();
 }
@@ -109,6 +117,7 @@ void GamePage::startSavedGame(SaveParameters saveParameters){
 
     this->initilizeGame();
     m_game = new Game(m_scene, m_options);
+    connect(m_game, SIGNAL(endMove()), this, SLOT(checkDirection()));
     m_game->setSaveParameters(saveParameters);
     m_game->startGame();
 }
@@ -128,43 +137,52 @@ GamePage::~GamePage(){
     delete m_back;
     delete m_pause;
 
-    delete m_saveName;
-
     delete m_score;
     delete m_record;
 }
 
 void GamePage::pauseButton(){
-    if (!m_game->isPaused()) m_game->pauseGame();
-    else m_game->continueGame();
+    if (!m_game->isPaused()){
+        m_game->pauseGame();
+        m_save->setEnabled(true);
+    }
+    else{
+        m_game->continueGame();
+        m_save->setEnabled(false);
+    }
+}
+
+void GamePage::checkDirection(){
+    m_game->setSnakeDirection(m_direction);
+    turnDirection = true;
 }
 
 void GamePage::keyPressEvent(QKeyEvent *event){
+    if (turnDirection){
     switch (event->key()) {
     case Qt::Key_D:
-        if (m_game->getSnakeDirection() != Snake::LEFT){
-            m_game->setSnakeDirection(Snake::RIGHT);
+        if (m_direction != Snake::LEFT){
+            m_direction = Snake::RIGHT;
         }
         break;
     case Qt::Key_A:
-        if (m_game->getSnakeDirection() != Snake::RIGHT){
-            m_game->setSnakeDirection(Snake::LEFT);
+        if (m_direction != Snake::RIGHT){
+            m_direction = Snake::LEFT;
         }
         break;
     case Qt::Key_W:
-        if (m_game->getSnakeDirection() != Snake::DOWN){
-            m_game->setSnakeDirection(Snake::UP);
+        if (m_direction != Snake::DOWN){
+            m_direction = Snake::UP;
         }
         break;
     case Qt::Key_S:
-        if (m_game->getSnakeDirection() != Snake::UP){
-            m_game->setSnakeDirection(Snake::DOWN);
+        if (m_direction != Snake::UP){
+            m_direction = Snake::DOWN;
         }
-        break;
-    case Qt::Key_R:
-       m_game->setSnakeStatus(Snake::INCREASED);
         break;
     default:
         break;
+    }
+    turnDirection = false;
     }
 }

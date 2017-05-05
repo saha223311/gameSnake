@@ -28,11 +28,11 @@ void MainPage::createWindow(){
     m_pageTitle = new QLabel("SNAKE GAME");
 
     //WORKINK STYLEEE !!!!!!!!!!!!!!!!!!!!!!
-   /* QPixmap image = QPixmap::fromImage(QImage("E://QtProjects//gameSnake//snake.png"));
+    QPixmap image = QPixmap::fromImage(QImage("E://QtProjects//gameSnake//snake.png"));
     m_pageTitle->setPixmap(image);
     QPalette palette;
     palette.setColor(QPalette::Background, Qt::white);
-    this->setPalette(palette);*/
+    this->setPalette(palette);
 
     m_play = new QPushButton("START");
     m_options = new QPushButton("Options");
