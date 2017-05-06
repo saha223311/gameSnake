@@ -12,7 +12,7 @@ class Snake : public QObject
     Q_OBJECT
 public:
     enum Status { INCREASED, LIVE, WIN, DEAD };
-    enum Direction { LEFT, UP, RIGHT, DOWN };
+    enum Direction { LEFT, UP, RIGHT, DOWN, NONE};
 
     explicit Snake(Options* options, QObject *parent = 0);
 

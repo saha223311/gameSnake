@@ -41,6 +41,8 @@ void SaveList::addSave(QString saveName, SaveParameters saveParameters){
             }
         setting.endArray();
 
+        setting.setValue("snakeDirection", saveParameters.snakeDirection);
+
         setting.setValue("xFruitCoordinate", saveParameters.fruitCoordinates.X);
         setting.setValue("yFruitCoordinate", saveParameters.fruitCoordinates.Y);
 
@@ -93,6 +95,7 @@ void SaveList::deleteSave(QString saveName){
 
 SaveParameters SaveList::getSave(QString saveName){
     QList<Coordinate> snakeCoordinates;
+    int snakeDirection;
     Coordinate fruitCoordinates;
     Options options;
     int arrayCounter = 0;
@@ -112,6 +115,8 @@ SaveParameters SaveList::getSave(QString saveName){
             }
         setting.endArray();
 
+        snakeDirection = setting.value("snakeDirection").toInt();
+
         X = setting.value("xFruitCoordinate").toInt();
         Y = setting.value("yFruitCoordinate").toInt();
         fruitCoordinates = Coordinate(X, Y);
@@ -122,7 +127,7 @@ SaveParameters SaveList::getSave(QString saveName){
         options.warpWallMode = setting.value("warpWallMode").toBool();
     setting.endGroup();
 
-    return SaveParameters(snakeCoordinates, fruitCoordinates, options);
+    return SaveParameters(snakeCoordinates, snakeDirection, fruitCoordinates, options);
 }
 
 int SaveList::getSaveNumber(){

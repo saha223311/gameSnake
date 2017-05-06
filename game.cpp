@@ -4,6 +4,8 @@
 #include <QPixmap>
 #include <QImage>
 
+#include <QDebug>
+
 Game::Game(QGraphicsScene *scene, Options *options, QObject *parent)
     : QObject(parent), m_scene(scene), m_options(options){
     m_snake = new Snake(m_options);
@@ -15,7 +17,6 @@ Game::Game(QGraphicsScene *scene, Options *options, QObject *parent)
 
 void Game::startGame(){
     score = 0;
-
     for (auto it : m_snake->getCoordinates()){
         if (it == m_snake->getHead()){
             m_scene->addRect(it.X * m_options->rectSize,
@@ -194,6 +195,7 @@ void Game::continueGame(){
 
 void Game::setSaveParameters(SaveParameters saveParameters){
     m_snake->setCoordinates(saveParameters.snakeCoordinates);
+    m_snake->setDirection(static_cast<Snake::Direction>(saveParameters.snakeDirection));
     m_fruit->setCoordinate(saveParameters.fruitCoordinates);
 }
 
@@ -202,7 +204,8 @@ void Game::setDefaultSaveParameters(){
 }
 
 SaveParameters Game::getSaveParameters(){
-    return SaveParameters(m_snake->getCoordinates(), m_fruit->getCoordinate(), *m_options);
+    return SaveParameters(m_snake->getCoordinates(), static_cast<int>(m_snake->getDirection()), //WORK
+                          m_fruit->getCoordinate(), *m_options);
 }
 
 Game::~Game(){

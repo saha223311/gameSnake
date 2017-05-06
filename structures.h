@@ -4,6 +4,7 @@
 #include <QString>
 #include <QList>
 
+
 struct Options{
     Options(){}
     Options(int height, int width, int rectSize, bool warpWallMode)
@@ -30,10 +31,13 @@ struct Coordinate{
 
 struct SaveParameters{
     SaveParameters(){}
-    SaveParameters(QList<Coordinate> snakeCoordinates, Coordinate fruitCoordinates, Options options)
-        :snakeCoordinates(snakeCoordinates), fruitCoordinates(fruitCoordinates), options(options){}
+    SaveParameters(QList<Coordinate> snakeCoordinates, int snakeDirection,
+                   Coordinate fruitCoordinates, Options options)
+        :snakeCoordinates(snakeCoordinates), snakeDirection(snakeDirection),
+          fruitCoordinates(fruitCoordinates), options(options){}
 
     QList<Coordinate> snakeCoordinates;
+    int snakeDirection;
     Coordinate fruitCoordinates;
     Options options;
     QString saveName;

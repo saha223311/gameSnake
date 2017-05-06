@@ -66,7 +66,7 @@ void GamePage::updateScore(){
 void GamePage::initilizeGame(){
     m_scene = new QGraphicsScene;
     m_view->setScene(m_scene);
-    m_direction = Snake::RIGHT;
+    //m_direction = Snake::RIGHT;
 
     m_scene->setSceneRect(0, 0, m_options->width * m_options->rectSize,
                           m_options->height * m_options->rectSize);
@@ -107,6 +107,7 @@ void GamePage::startNewGame(OptionsPage *optionsPage){
     this->initilizeGame();
     m_game = new Game(m_scene, m_options);
     connect(m_game, SIGNAL(endMove()), this, SLOT(checkDirection()));
+    m_direction = Snake::NONE;
     m_game->setDefaultSaveParameters();
     m_game->startGame();
 }
@@ -118,6 +119,7 @@ void GamePage::startSavedGame(SaveParameters saveParameters){
     this->initilizeGame();
     m_game = new Game(m_scene, m_options);
     connect(m_game, SIGNAL(endMove()), this, SLOT(checkDirection()));
+    m_direction = static_cast<Snake::Direction>(saveParameters.snakeDirection);
     m_game->setSaveParameters(saveParameters);
     m_game->startGame();
 }
