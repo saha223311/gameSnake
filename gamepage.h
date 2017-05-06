@@ -22,6 +22,7 @@
 #include "optionspage.h"
 #include "structures.h"
 #include "savenamepage.h"
+#include "resultpage.h"
 
 
 class GamePage : public QWidget
@@ -36,12 +37,16 @@ public:
     ~GamePage();
 
 signals:
+    void restartGame();
     void backButton();
     void saveGame(SaveParameters);
 public slots:
     void updateScore();
     void saveProcess(QString);
     void setSaveNamePage();
+
+    void setWinResultPage();
+    void setLoseResultPage();
 
     void checkDirection();
 private slots:
@@ -66,6 +71,7 @@ private:
 
     Options* m_options;
     SaveNamePage m_saveNamePage;
+    ResultPage m_resultPage;
 
     Snake::Direction m_direction;
     bool turnDirection = true;

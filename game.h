@@ -41,6 +41,9 @@ public:
     ~Game();
 
 signals:
+    void winGame();
+    void loseGame();
+
     void newScore();
     void saveGame();
 

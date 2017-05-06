@@ -13,6 +13,7 @@ Game::Game(QGraphicsScene *scene, Options *options, QObject *parent)
     m_timer = new QTimer;
 
     connect(m_timer, SIGNAL(timeout()), this, SLOT(drawSnake()));
+
 }
 
 void Game::startGame(){
@@ -182,13 +183,13 @@ Snake::Direction Game::getSnakeDirection() const{
 }
 
 void Game::m_gameOver(){
-    this->checkBestScore();
-    while (true){}
+    m_timer->stop();
+    emit loseGame();
 }
 
 void Game::m_happyEnd(){
-    this->checkBestScore();
-    while (true){}
+    m_timer->stop();
+    emit winGame();
 }
 
 void Game::checkBestScore(){

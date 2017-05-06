@@ -25,6 +25,7 @@ void GamePage::createWindow(){
 
     m_highButtonLayout->addStretch(1);
     m_highButtonLayout->addWidget(m_back);
+    m_highButtonLayout->addStretch(1);
     m_highButtonLayout->addWidget(m_save);
     m_highButtonLayout->addStretch(1);
 
@@ -47,6 +48,9 @@ void GamePage::createWindow(){
 
     connect(m_save, SIGNAL(clicked()), this, SLOT(setSaveNamePage()));
     connect(&m_saveNamePage, SIGNAL(saveProcess(QString)), this, SLOT(saveProcess(QString)));
+    connect(&m_resultPage, SIGNAL(backButton()), this, SIGNAL(backButton()));
+    connect(&m_resultPage, SIGNAL(restartGame()), this, SIGNAL(backButton()));
+    connect(&m_resultPage, SIGNAL(restartGame()), this, SIGNAL(restartGame()));
 }
 
 void GamePage::setSaveNamePage(){
@@ -95,6 +99,22 @@ void GamePage::showEvent(QShowEvent*){
           (QApplication::desktop()->height() - height()) / 2);
 
     connect(m_game, SIGNAL(newScore()), this, SLOT(updateScore()));
+    connect(m_game, SIGNAL(winGame()), this, SLOT(setWinResultPage()));
+    connect(m_game, SIGNAL(loseGame()), this, SLOT(setLoseResultPage()));
+}
+
+void GamePage::setWinResultPage(){
+    m_game->checkBestScore();
+    m_resultPage.setWinPage();
+    m_resultPage.setResult(m_game->getScore());
+    m_resultPage.show();
+}
+
+void GamePage::setLoseResultPage(){
+    m_game->checkBestScore();
+    m_resultPage.setLosePage();
+    m_resultPage.setResult(m_game->getScore());
+    m_resultPage.show();
 }
 
 void GamePage::closeEvent(QCloseEvent*){
