@@ -31,6 +31,7 @@ public:
     const QList<Coordinate>& getCoordinates() const;
     Snake::Direction getDirection() const;
     Snake::Status getStatus() const;
+    int getScore();
 
 private:
     Status m_status = LIVE;

@@ -16,7 +16,10 @@ Game::Game(QGraphicsScene *scene, Options *options, QObject *parent)
 }
 
 void Game::startGame(){
-    score = 0;
+    bestScore = 0;
+    score = m_snake->getScore();
+    QSettings setting("MyCompany", "myapp");
+    bestScore = setting.value("record").toInt();
     for (auto it : m_snake->getCoordinates()){
         if (it == m_snake->getHead()){
             m_scene->addRect(it.X * m_options->rectSize,
@@ -43,6 +46,10 @@ int Game::getScore(){
     return score;
 }
 
+int Game::getBestScore(){
+    return bestScore;
+}
+
 void Game::drawSnake(){
     emit this->endMove();
     this->checkDead();
@@ -57,6 +64,7 @@ void Game::drawSnake(){
 
     case Snake::INCREASED:
         score++;
+        if (score > bestScore) bestScore = score;
         emit newScore();
         this->spawnNewFruit();
         this->drawIncreaseSnake();
@@ -174,11 +182,19 @@ Snake::Direction Game::getSnakeDirection() const{
 }
 
 void Game::m_gameOver(){
+    this->checkBestScore();
     while (true){}
 }
 
 void Game::m_happyEnd(){
+    this->checkBestScore();
     while (true){}
+}
+
+void Game::checkBestScore(){
+    QSettings setting("MyCompany", "myapp");
+    if (bestScore > setting.value("record").toInt())
+        setting.setValue("record", bestScore);
 }
 
 bool Game::isPaused(){

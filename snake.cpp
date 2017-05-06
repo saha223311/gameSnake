@@ -37,6 +37,10 @@ const QList<Coordinate> &Snake::getCoordinates() const{
     return m_body;
 }
 
+int Snake::getScore(){
+    return m_body.size() - 1;
+}
+
 Coordinate Snake::nextMove(){
     Coordinate temp = m_body.front();
     switch (m_direction) {

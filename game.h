@@ -5,6 +5,7 @@
 
 #include <QGraphicsScene>
 #include <QTimer>
+#include <QSettings>
 
 #include "snake.h"
 #include "fruit.h"
@@ -27,12 +28,15 @@ public:
     SaveParameters getSaveParameters();
 
     int getScore();
+    int getBestScore();
 
     Snake::Direction getSnakeDirection() const;
 
     bool isPaused();
     void pauseGame();
     void continueGame();
+
+    void checkBestScore();
 
     ~Game();
 
@@ -55,6 +59,7 @@ private:
     Fruit* m_fruit;
 
     int score;
+    int bestScore;
 
     void checkDead();
     void checkIncreased();

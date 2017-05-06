@@ -18,7 +18,7 @@ void GamePage::createWindow(){
     m_save = new QPushButton("Save");
 
     m_score = new QLabel;
-    m_record = new QLabel("Best Score: 0");
+    m_record = new QLabel;
 
     m_view = new QGraphicsView;
     m_view->setBackgroundBrush(QBrush(QColor(235, 235, 176)));
@@ -61,6 +61,7 @@ void GamePage::saveProcess(QString saveName){
 
 void GamePage::updateScore(){
     m_score->setText("Score: " + QString::number(m_game->getScore()));
+    m_record->setText("Best Score: " + QString::number(m_game->getBestScore()));
 }
 
 void GamePage::initilizeGame(){
@@ -84,6 +85,7 @@ void GamePage::initilizeGame(){
 
 void GamePage::showEvent(QShowEvent*){
     m_score->setText("Score: " + QString::number(m_game->getScore()));
+    m_record->setText("Best Score: " + QString::number(m_game->getBestScore()));
     m_save->setEnabled(false);
 
     this->setFixedSize(m_view->width() + 20, m_view->height() + m_back->height() + m_score->height() + 30);
@@ -96,6 +98,7 @@ void GamePage::showEvent(QShowEvent*){
 }
 
 void GamePage::closeEvent(QCloseEvent*){
+    m_game->checkBestScore();
     delete m_scene;
     delete m_game;
 }
